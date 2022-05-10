@@ -2,7 +2,7 @@ unit Filas;
 
 interface
 
-  const MAX = 50;
+  const MAX = 10;
   type Elem = integer;
        Fila = record
                 total : integer;

@@ -1,25 +1,72 @@
-program fila_bancaria;
 
-uses crt, Filas;
+Program fila_bancaria;
 
-var i : Integer;
-var t : Integer;
-var chega : Integer;
-var libera : Integar
+Uses crt, Filas;
 
-begin
-  randomize;
-  t := 0;
-  chega := 3;
-  libera := 4;
+Var i : Integer;
 
-  for i := 0 to 360 do
-    begin
-      if  random(10) = 0 then
-        begin
-          t := t + 1;
-        end;
-    end;
-  
-  writeln('ocorrencias:',t);
-end.
+Const tempo_fila : Integer = 3;
+
+Const tempo_caixa : Integer = 4;
+
+Var f : Fila;
+
+Var caixa_ocupado : Boolean;
+
+Var lotado : Integer;
+
+Var pessoas_restantes : Integer;
+
+Begin
+  Randomize;
+  caixa_ocupado := false;
+  lotado := 0;
+  pessoas_restantes := 0;
+  Qinit(f);
+
+  For i := 0 To 360 Do
+    Begin
+
+      If random(tempo_fila) = 0 Then
+        Begin
+          If Not QisFull(f) Then
+            Begin
+              Enqueue(f,1);
+            End
+          Else
+            Begin
+              lotado := lotado + 1;
+            End;
+        End;
+
+      If caixa_ocupado = false Then
+        Begin
+          If Not QisEmpty(f) Then
+            Begin
+              Dequeue(f);
+              caixa_ocupado := true;
+            End;
+        End;
+
+      If (random(tempo_caixa) = 0) And (caixa_ocupado = true) Then
+        Begin
+          caixa_ocupado := false;
+        End;
+    End;
+
+  For i := 1 To 10 Do
+    Begin
+      If Not QisEmpty(f) Then
+        Begin
+          pessoas_restantes := pessoas_restantes + Dequeue(f);
+        End;
+    End;
+
+  writeln(' ');
+  writeln('======= Relatorio de Movimentacao =======');
+  writeln(' ');
+  writeln('-> O banco lotou ', lotado, ' vezes');
+  writeln('-> Restaram ', pessoas_restantes, ' pessoas na fila');
+  writeln(' ');
+  writeln('=========================================');
+End.
