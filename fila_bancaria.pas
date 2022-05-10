@@ -27,6 +27,17 @@ Begin
   For i := 0 To 360 Do
     Begin
 
+      //Se o caixa estive livre e a fila não estiver vazia, desenfileira uma pessoa e ocupa o caixa
+      If caixa_ocupado = false Then
+        Begin
+          If Not QisEmpty(f) Then
+            Begin
+              Dequeue(f);
+              caixa_ocupado := true;
+            End;
+        End;
+
+      //Pessoas vão chegando de forma aleatória na fila, se já estiver cheia significa que o banco está lotado
       If random(tempo_fila) = 0 Then
         Begin
           If Not QisFull(f) Then
@@ -39,21 +50,14 @@ Begin
             End;
         End;
 
-      If caixa_ocupado = false Then
-        Begin
-          If Not QisEmpty(f) Then
-            Begin
-              Dequeue(f);
-              caixa_ocupado := true;
-            End;
-        End;
-
+      //Pessoas vão liberando o caixa de forma aleatória caso o mesmo esteja ocupado
       If (random(tempo_caixa) = 0) And (caixa_ocupado = true) Then
         Begin
           caixa_ocupado := false;
         End;
     End;
 
+  //Verifica quantas pessoas restaram na fila ao final do expediente
   For i := 1 To 10 Do
     Begin
       If Not QisEmpty(f) Then
