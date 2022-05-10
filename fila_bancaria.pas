@@ -24,6 +24,7 @@ Begin
   pessoas_restantes := 0;
   Qinit(f);
 
+  //Horário de funcionamento do banco
   For i := 0 To 360 Do
     Begin
 
